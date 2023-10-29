@@ -23,7 +23,7 @@ const users = [
 ];
 
 app.use((req, res, next) => {
-    const token = req.cookies.token;
+    const token = req.cookies?.token;
 
     if (token) {
         jwt.verify(token, secretKey, (err, decoded) => {
@@ -42,13 +42,23 @@ function createToken(user) {
 
 
 app.get('/', (req, res) => {
+    // if (req.user) {
+    //     return res.json({
+    //         username: req.user.username,
+    //         logout: 'http://localhost:3000/logout'
+    //     });
+    // }
+    return res.sendFile(path.join(__dirname + '/index.html'));
+});
+
+app.get('/me', (req, res) => {
     if (req.user) {
         return res.json({
             username: req.user.username,
             logout: 'http://localhost:3000/logout'
         });
     }
-    res.sendFile(path.join(__dirname + '/index.html'));
+    // res.sendFile(path.join(__dirname + '/index.html'));
 });
 
 app.get('/logout', (req, res) => {
