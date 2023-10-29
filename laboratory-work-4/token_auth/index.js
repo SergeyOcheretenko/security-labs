@@ -1,19 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const jwt = require('jsonwebtoken');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const axios = require('axios');
 const querystring = require('querystring');
+require('dotenv').config();
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-const domain = 'https://dev-fy6qkss3y7aityfq.us.auth0.com';
-const clientId = 'cwErKmr6lh7idK1GYKmtinzRhVV1NkPh';
-const clientSecret = 'cFoeBYDJM9OfPamr1Zw173FnNhINyGgAyU1VJf1mdcbtQdIdrrtYWZ8EvwrPA1RJ';
+const domain = process.env.DOMAIN;
+const clientId = process.env.CLIENT_ID;
+const clientSecret = process.env.CLIENT_SECRET;
 
 app.use((req, res, next) => {
     const token = req.cookies?.token;
